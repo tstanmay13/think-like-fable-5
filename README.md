@@ -34,6 +34,8 @@ node evals/run.mjs --model claude-sonnet-5  # a different model under test
 
 Requires the `claude` CLI, installed and authenticated.
 
+The harness is also how the skill was written. The first full run showed the skill making Haiku worse on one scenario: a fix request with an "open question" planted inside flipped it into menu-and-ask mode. That finding became a new rule in the skill (sub-decisions inside a task are yours to make), which took the scenario from 2/5 back to 4/5. Full-suite totals on Haiku before that fix: 32/42 bare, 35/42 with the skill. Expect single-run noise; judge verdicts land in `evals/results/`.
+
 ## Demo
 
 A recorded terminal session is in [`docs/demo.cast`](docs/demo.cast) (`asciinema play docs/demo.cast`).
