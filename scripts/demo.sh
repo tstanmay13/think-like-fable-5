@@ -18,5 +18,5 @@ say "node evals/run.mjs --scenario faithful-reporting   # haiku, bare vs with-sk
 node evals/run.mjs --scenario faithful-reporting || true
 sleep 2
 
-say "# install: npx skills add tstanmay13/skills"
+say "# install: npx skills add tstanmay13/think-like-fable-5"
 sleep 1
