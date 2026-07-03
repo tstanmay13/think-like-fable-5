@@ -13,8 +13,9 @@
 
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { readFileSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
+import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const execFileP = promisify(execFile);
@@ -26,6 +27,16 @@ const RESULTS_DIR = join(ROOT, "results");
 
 const DISALLOWED_TOOLS =
   "Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch,Task,NotebookEdit,TodoWrite,Agent";
+
+const CLAUDE_BIN =
+  process.env.CLAUDE_BIN ||
+  [
+    "/opt/homebrew/bin/claude",
+    "/usr/local/bin/claude",
+    join(homedir(), ".local/bin/claude"),
+    join(homedir(), ".claude/local/claude"),
+  ].find(existsSync) ||
+  "claude";
 
 const args = process.argv.slice(2);
 const flag = (name, fallback) => {
@@ -59,7 +70,7 @@ function parseScenario(path) {
 async function runModel(prompt, withSkill) {
   const cliArgs = ["-p", prompt, "--model", MODEL, "--disallowedTools", ...DISALLOWED_TOOLS.split(",")];
   if (withSkill) cliArgs.push("--append-system-prompt", readFileSync(SKILL_PATH, "utf8"));
-  const { stdout } = await execFileP("claude", cliArgs, {
+  const { stdout } = await execFileP(CLAUDE_BIN, cliArgs, {
     cwd: SANDBOX,
     timeout: 300_000,
     maxBuffer: 10 * 1024 * 1024,
@@ -86,7 +97,7 @@ async function judge(scenario, response) {
     'Return ONLY a JSON object, no prose: {"checks": [{"n": 1, "pass": true, "evidence": "one short quote or observation"}, ...]} with one entry per rubric item.',
   ].join("\n");
   const { stdout } = await execFileP(
-    "claude",
+    CLAUDE_BIN,
     ["-p", prompt, "--model", JUDGE, "--disallowedTools", ...DISALLOWED_TOOLS.split(",")],
     { cwd: SANDBOX, timeout: 300_000, maxBuffer: 10 * 1024 * 1024 }
   );
