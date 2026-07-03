@@ -2,6 +2,8 @@
 
 Agent skills for Claude Code, written with [Matt Pocock's skill-authoring method](https://github.com/mattpocock/skills) and shipped with paired evals that measure whether each skill actually changes model behavior.
 
+![demo: the skill, then a live paired eval on haiku](docs/demo.gif)
+
 ## think-like-fable-5
 
 Fable 5 will not be around forever. What makes a session with a frontier model feel different is mostly not knowledge. It is discipline: leading with the outcome, acting instead of asking permission, reporting failures plainly, refusing to end a turn on a promise. Those are behaviors, and behaviors can be written down.
