@@ -1,0 +1,16 @@
+{
+  "name": "tstanmay13-think-like-fable-5",
+  "owner": {
+    "name": "Tanmay Singh"
+  },
+  "plugins": [
+    {
+      "name": "think-like-fable-5",
+      "source": {
+        "source": "github",
+        "repo": "tstanmay13/think-like-fable-5"
+      },
+      "description": "Fable 5's working discipline, distilled — outcome-first reporting, act-don't-ask autonomy, faithful verification. Load at session start on a smaller model."
+    }
+  ]
+}
